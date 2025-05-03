@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Button,
   Flex,
   FormControl,
@@ -11,41 +7,39 @@ import {
   Heading,
   Input,
   Text,
-  useToast,
 } from "@chakra-ui/react";
 import { Spacer } from "../components/lib/Spacer";
-import { api } from "~/utils/api";
 
 interface Props {
   nickname?: string | null;
 }
 
 export function AddNickName({ nickname: existingNick }: Props) {
-  const { mutate, status } = api.settings.updateUser.useMutation();
+  // const { mutate, status } = api.settings.updateUser.useMutation();
   const [nickName, setNickName] = useState(existingNick ?? "");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
-  const toast = useToast();
+  // const toast = useToast();
 
   function submitNickname(e: React.SyntheticEvent) {
     e.preventDefault();
-    mutate({
-      nickName: nickName,
-    });
+    // mutate({
+    //   nickName: nickName,
+    // });
   }
 
-  useEffect(() => {
-    if (status === "success") {
-      toast({
-        title: "Brukernavn oppdatert.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-    } else if (status === "error") {
-      setError("Klarte ikke å oppdatere brukernavn. Prøv igjen senere.");
-    }
-  }, [status, toast]);
+  // useEffect(() => {
+  //   if (status === "success") {
+  //     toast({
+  //       title: "Brukernavn oppdatert.",
+  //       status: "success",
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //   } else if (status === "error") {
+  //     setError("Klarte ikke å oppdatere brukernavn. Prøv igjen senere.");
+  //   }
+  // }, [status, toast]);
 
   return (
     <>
@@ -69,8 +63,8 @@ export function AddNickName({ nickname: existingNick }: Props) {
               type="text"
             ></Input>
             <Button
-              disabled={nickName.length < 3 || status === "loading"}
-              isLoading={status === "loading"}
+              // disabled={nickName.length < 3 || status === "loading"}
+              // isLoading={status === "loading"}
               type="submit"
             >
               Endre
@@ -79,13 +73,13 @@ export function AddNickName({ nickname: existingNick }: Props) {
         </FormControl>
       </form>
       <Spacer />
-      {error ? (
+      {/* {error ? (
         <Alert status="error">
           <AlertIcon />
           <AlertTitle>Noe gikk galt</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
-      ) : null}
+      ) : null} */}
     </>
   );
 }
