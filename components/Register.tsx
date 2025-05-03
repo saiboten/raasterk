@@ -22,6 +22,7 @@ import {
   RegisterWorkoutOutput,
 } from "@/app/create/[id]/actions";
 import { calculateScore } from "@/utils/score";
+import { useTransition } from "react";
 
 interface Values {
   length: string;
@@ -37,6 +38,8 @@ interface Props {
 }
 
 export const Register = ({ workoutType }: Props) => {
+  const [isPending, startTransition] = useTransition();
+
   const navigation = useRouter();
   const { control, handleSubmit, watch } = useForm<Values>({
     defaultValues: {
@@ -46,14 +49,16 @@ export const Register = ({ workoutType }: Props) => {
   });
 
   const formSubmit = async (values: Values) => {
-    const result = await registerWorkout({
-      workoutId: workoutType.id,
-      iterations: parseInt(values.iterations),
-      length: parseInt(values.length),
+    startTransition(async () => {
+      const result = await registerWorkout({
+        workoutId: workoutType.id,
+        iterations: parseInt(values.iterations),
+        length: parseInt(values.length),
+      });
+      if (result) {
+        navigation.push("/?action=addworkoutsuccess"); // todo check if result is ok with useActionState or something
+      }
     });
-    if (result) {
-      navigation.push("/?action=addworkoutsuccess"); // todo check if result is ok with useActionState or something
-    }
   };
 
   const { iterations, length } = watch();
@@ -116,8 +121,8 @@ export const Register = ({ workoutType }: Props) => {
         <Spacer />
         <Button
           type="submit"
-          // isLoading={status === "loading"}
-          // disabled={status === "loading" || score === 0}
+          isLoading={isPending}
+          disabled={isPending || score === 0}
         >
           Lagre
         </Button>
