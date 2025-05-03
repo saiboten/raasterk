@@ -17,7 +17,7 @@ export const WorkoutNewsFeed = ({ lastFive }: Props) => {
   return (
     <Box>
       <Heading size="md" mb="5">
-        Siste treninger
+        Siste treninger denne måneden
       </Heading>
       <Flex textAlign="left" flexDirection="column" gap="2">
         {lastFive.map((workout) => {

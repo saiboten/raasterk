@@ -8,8 +8,7 @@ import {
   VictoryLegend,
 } from "victory";
 import { ChartData } from "@/app/actions";
-
-const colors = ["tomato", "darkcyan", "grey"] as const;
+import { color } from "@/app/TotalScoreChart";
 
 export const OverviewChart = ({
   chartData,
@@ -37,10 +36,10 @@ export const OverviewChart = ({
           y={10}
           centerTitle
           orientation="horizontal"
-          gutter={20}
+          gutter={5}
           data={users.map((el, index) => ({
             name: el,
-            symbol: { fill: colors[index % 2] },
+            symbol: { fill: color[index % color.length] },
           }))}
         />
         <VictoryAxis
@@ -54,7 +53,9 @@ export const OverviewChart = ({
         />
         <VictoryAxis dependentAxis tickFormat={(x) => `${x}`} />
         <VictoryGroup
-          colorScale={users.map((el, index) => colors[index % 2] ?? "black")}
+          colorScale={users.map(
+            (el, index) => color[index % color.length] ?? "black"
+          )}
           offset={4}
         >
           {users.map((userName, index) => {

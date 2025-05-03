@@ -4,13 +4,13 @@ import { Box, Heading } from "@chakra-ui/react";
 import { VictoryAxis, VictoryBar, VictoryChart } from "victory";
 import { ScoreData } from "./FrontPageContent";
 
-const color = ["chocolate", "darkcyan"];
+export const color = ["chocolate", "darkcyan", "lightcoral"] as const;
 
 interface Props {
   scoreData: ScoreData | null;
 }
 
-export function TotalScore({ scoreData }: Props) {
+export function TotalScoreChart({ scoreData }: Props) {
   if (scoreData === null) {
     return null;
   }
@@ -30,15 +30,17 @@ export function TotalScore({ scoreData }: Props) {
       <Heading size="md">Stillingen</Heading>
       <Spacer />
 
-      <VictoryChart>
+      <VictoryChart domainPadding={{ x: 50 }}>
         <VictoryAxis />
         <VictoryBar
           x={"name"}
           y={"totalScore"}
-          barWidth={100}
+          barWidth={50}
           labels={({ datum }) => `${datum.totalScore}`}
-          data={totalScores.map((el, index) => ({ ...el, fill: color[index] }))}
-          domain={{ x: [0, 3] }}
+          data={totalScores.map((el, index) => ({
+            ...el,
+            fill: color[index % color.length],
+          }))}
           style={{
             data: {
               fill: ({ datum }) => datum.fill,

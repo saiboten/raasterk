@@ -72,6 +72,8 @@ export default async function Home({
       />
       <WorkoutNewsFeed lastFive={lastFive} />
 
+      <Spacer />
+
       <AddWorkoutLinks workoutTypes={workoutTypes} />
       <Spacer />
       <Link href="workouts">

@@ -8,8 +8,7 @@ import {
 } from "victory";
 import { Loader } from "./lib/Loader";
 import { ChartData } from "@/app/actions";
-
-const colors = ["tomato", "darkcyan", "grey"] as const;
+import { color } from "@/app/TotalScoreChart";
 
 export const ProgressLineChart = ({
   chartData,
@@ -45,7 +44,7 @@ export const ProgressLineChart = ({
           gutter={20}
           data={users.map((el, index) => ({
             name: el,
-            symbol: { fill: colors[index % 2] },
+            symbol: { fill: color[index % color.length] },
           }))}
         />
         <VictoryAxis
@@ -61,7 +60,9 @@ export const ProgressLineChart = ({
         />
         <VictoryAxis dependentAxis tickFormat={(x) => `${x}`} />
         <VictoryGroup
-          colorScale={users.map((el, index) => colors[index % 2] ?? "black")}
+          colorScale={users.map(
+            (el, index) => color[index % color.length] ?? "black"
+          )}
           offset={4}
         >
           {users.map((userName, index) => {

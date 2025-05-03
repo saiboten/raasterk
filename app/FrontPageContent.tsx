@@ -3,7 +3,7 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { addMonths } from "date-fns";
 import { useState } from "react";
-import { TotalScore } from "./TotalScore";
+import { TotalScoreChart } from "./TotalScoreChart";
 import { Spacer } from "@/components/lib/Spacer";
 import { ChartData } from "./actions";
 import { OverviewChart } from "@/components/OverviewChart";
@@ -90,7 +90,7 @@ export function FrontPageContent({
         </Button>
       </Flex>
 
-      <TotalScore scoreData={scoreData} />
+      <TotalScoreChart scoreData={scoreData} />
 
       <Spacer />
       <OverviewChart chartData={chartData} />
