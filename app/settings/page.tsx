@@ -1,8 +1,9 @@
 import { Heading } from "@chakra-ui/react";
-import { LogOut } from "./Logout";
+// import { LogOut } from "./Logout";
 import { AddNickName } from "@/components/AddNickName";
 import { prisma } from "@/lib/prisma";
 import { getUserId } from "../getUserId";
+import { revalidatePath } from "next/cache";
 
 export default async function Settings() {
   async function changeNickName(newName: string) {
@@ -15,6 +16,8 @@ export default async function Settings() {
         nickname: newName,
       },
     });
+    revalidatePath("/");
+    revalidatePath("/settings");
   }
 
   async function loadNickName() {
@@ -34,7 +37,7 @@ export default async function Settings() {
         Innstillinger
       </Heading>
       <AddNickName nickname={existingNick} changeNickName={changeNickName} />
-      <LogOut />
+      {/* <LogOut /> */}
     </>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import {
   Button,
   Flex,
@@ -8,37 +8,33 @@ import {
   Heading,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Spacer } from "../components/lib/Spacer";
 
 interface Props {
   nickname?: string | null;
-  changeNickName: (newNick: string) => void;
+  changeNickName: (newNick: string) => Promise<void>;
 }
 
 export function AddNickName({ nickname: existingNick, changeNickName }: Props) {
+  const [isPending, startTransition] = useTransition();
   const [nickName, setNickName] = useState(existingNick ?? "");
-  // const [error, setError] = useState("");
 
-  // const toast = useToast();
+  const toast = useToast();
 
   async function submitNickname(e: React.SyntheticEvent) {
     e.preventDefault();
-    await changeNickName(nickName);
+    startTransition(async () => {
+      await changeNickName(nickName);
+      toast({
+        title: "Brukernavn oppdatert.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    });
   }
-
-  // useEffect(() => {
-  //   if (status === "success") {
-  //     toast({
-  //       title: "Brukernavn oppdatert.",
-  //       status: "success",
-  //       duration: 5000,
-  //       isClosable: true,
-  //     });
-  //   } else if (status === "error") {
-  //     setError("Klarte ikke å oppdatere brukernavn. Prøv igjen senere.");
-  //   }
-  // }, [status, toast]);
 
   return (
     <>
@@ -62,8 +58,8 @@ export function AddNickName({ nickname: existingNick, changeNickName }: Props) {
               type="text"
             ></Input>
             <Button
-              // disabled={nickName.length < 3 || status === "loading"}
-              // isLoading={status === "loading"}
+              disabled={nickName.length < 3 || isPending}
+              isLoading={isPending}
               type="submit"
             >
               Endre
@@ -72,13 +68,6 @@ export function AddNickName({ nickname: existingNick, changeNickName }: Props) {
         </FormControl>
       </form>
       <Spacer />
-      {/* {error ? (
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle>Noe gikk galt</AlertTitle>
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      ) : null} */}
     </>
   );
 }
