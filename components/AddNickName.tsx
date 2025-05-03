@@ -12,20 +12,18 @@ import { Spacer } from "../components/lib/Spacer";
 
 interface Props {
   nickname?: string | null;
+  changeNickName: (newNick: string) => void;
 }
 
-export function AddNickName({ nickname: existingNick }: Props) {
-  // const { mutate, status } = api.settings.updateUser.useMutation();
+export function AddNickName({ nickname: existingNick, changeNickName }: Props) {
   const [nickName, setNickName] = useState(existingNick ?? "");
   // const [error, setError] = useState("");
 
   // const toast = useToast();
 
-  function submitNickname(e: React.SyntheticEvent) {
+  async function submitNickname(e: React.SyntheticEvent) {
     e.preventDefault();
-    // mutate({
-    //   nickName: nickName,
-    // });
+    await changeNickName(nickName);
   }
 
   // useEffect(() => {
