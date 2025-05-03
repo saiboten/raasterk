@@ -1,3 +1,38 @@
-export default function Workouts() {
-  return <div>Kommer snart...</div>;
+import { Button, Heading, Spacer } from "@chakra-ui/react";
+import Link from "next/link";
+import { WorkoutsList } from "./WorkoutList";
+import { prisma } from "@/lib/prisma";
+import { getUserId } from "../getUserId";
+
+export default async function Workouts() {
+  async function loadWorkouts(index: number) {
+    "use server";
+    return (
+      await prisma.workout.findMany({
+        skip: index * 10,
+        take: 10,
+        where: {
+          userId: await getUserId(),
+        },
+        include: {
+          WorkoutType: true,
+        },
+      })
+    ).sort((el1, el2) => (el1.date < el2.date ? 1 : -1));
+  }
+
+  const workouts = await loadWorkouts(0);
+
+  return (
+    <>
+      <Heading mb="5" size="lg">
+        Treninger
+      </Heading>
+      <WorkoutsList initialWorkouts={workouts} loadWorkouts={loadWorkouts} />
+      <Spacer />
+      <Link href="/">
+        <Button colorScheme="teal">Tilbake</Button>
+      </Link>
+    </>
+  );
 }

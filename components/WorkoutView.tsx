@@ -1,3 +1,4 @@
+"use client";
 import { Box, Heading } from "@chakra-ui/react";
 import { User, Workout, WorkoutType } from "@prisma/client";
 import { format } from "date-fns";
