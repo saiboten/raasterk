@@ -1,8 +1,10 @@
-import { Button, Heading, Spacer } from "@chakra-ui/react";
+import { Button, Heading } from "@chakra-ui/react";
 import Link from "next/link";
 import { WorkoutsList } from "./WorkoutList";
+import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getUserId } from "../getUserId";
+import { Spacer } from "@/components/lib/Spacer";
 
 export default async function Workouts() {
   async function loadWorkouts(index: number) {
@@ -18,7 +20,7 @@ export default async function Workouts() {
           WorkoutType: true,
         },
       })
-    ).sort((el1, el2) => (el1.date < el2.date ? 1 : -1));
+    ).sort((el1, el2) => (el1.date > el2.date ? 1 : -1));
   }
 
   const workouts = await loadWorkouts(0);
@@ -30,8 +32,11 @@ export default async function Workouts() {
       </Heading>
       <WorkoutsList initialWorkouts={workouts} loadWorkouts={loadWorkouts} />
       <Spacer />
+
       <Link href="/">
-        <Button colorScheme="teal">Tilbake</Button>
+        <Button colorScheme="teal">
+          <ArrowLeft /> Tilbake
+        </Button>
       </Link>
     </>
   );

@@ -19,7 +19,8 @@ export const WorkoutView = ({ workout }: Props) => {
         </Heading>
       ) : null}
       <Heading size="sm">
-        {format(workout.date, "d. MMMM HH:mm")}: {workout.WorkoutType?.name}
+        {format(workout.date, "yyyy: d. MMMM HH:mm")}:{" "}
+        {workout.WorkoutType?.name}
       </Heading>
 
       {workout.WorkoutType?.hasLength ? (

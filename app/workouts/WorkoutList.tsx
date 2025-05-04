@@ -2,6 +2,7 @@
 import { WorkoutView } from "@/components/WorkoutView";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { User, Workout, WorkoutType } from "@prisma/client";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
@@ -42,7 +43,9 @@ export function WorkoutsList({ initialWorkouts, loadWorkouts }: Props) {
             const newWorkouts = await loadWorkouts(newIndex);
             setWorkouts(newWorkouts);
           }}
-        ></Button>
+        >
+          <ArrowLeft />
+        </Button>
         <Button
           isDisabled={workouts.length === 0}
           onClick={async () => {
@@ -51,7 +54,9 @@ export function WorkoutsList({ initialWorkouts, loadWorkouts }: Props) {
             const newWorkouts = await loadWorkouts(newIndex);
             setWorkouts(newWorkouts);
           }}
-        ></Button>
+        >
+          <ArrowRight />
+        </Button>
       </Flex>
       <Flex textAlign="left" flexDirection="column" gap="2">
         {workouts.map((workout) => {

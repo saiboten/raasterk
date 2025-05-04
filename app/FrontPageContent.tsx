@@ -8,6 +8,7 @@ import { Spacer } from "@/components/lib/Spacer";
 import { ChartData } from "./actions";
 import { OverviewChart } from "@/components/OverviewChart";
 import { ProgressLineChart } from "@/components/ProgressLineChart";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const options1 = {
   year: "numeric",
@@ -70,7 +71,7 @@ export function FrontPageContent({
             setChartData(newChartData);
           }}
         >
-          Forrige måned
+          <ArrowLeft /> Forrige måned
         </Button>
         <Button
           isDisabled={addMonths(new Date(), month + 1) > new Date()}
@@ -86,7 +87,7 @@ export function FrontPageContent({
             setChartData(newChartData);
           }}
         >
-          Neste måned
+          Neste måned <ArrowRight />
         </Button>
       </Flex>
 
