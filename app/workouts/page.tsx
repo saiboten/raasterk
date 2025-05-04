@@ -35,6 +35,7 @@ export default async function Workouts() {
     });
 
     revalidatePath("/workouts");
+    revalidatePath("/");
   }
 
   const workouts = await loadWorkouts(0);
