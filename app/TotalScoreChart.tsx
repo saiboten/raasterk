@@ -29,25 +29,35 @@ export function TotalScoreChart({ scoreData }: Props) {
     <>
       <Heading size="md">Stillingen</Heading>
       <Spacer />
-
-      <VictoryChart domainPadding={{ x: 50 }}>
-        <VictoryAxis />
-        <VictoryBar
-          x={"name"}
-          y={"totalScore"}
-          barWidth={50}
-          labels={({ datum }) => `${datum.totalScore}`}
-          data={totalScores.map((el, index) => ({
-            ...el,
-            fill: color[index % color.length],
-          }))}
+      <div style={{ touchAction: "auto", WebkitOverflowScrolling: "touch" }}>
+        <VictoryChart
+          domainPadding={{ x: 50 }}
           style={{
-            data: {
-              fill: ({ datum }) => datum.fill,
+            parent: {
+              pointerEvents: "auto",
+              touchAction: "auto",
+              userSelect: "auto",
             },
           }}
-        />
-      </VictoryChart>
+        >
+          <VictoryAxis />
+          <VictoryBar
+            x={"name"}
+            y={"totalScore"}
+            barWidth={50}
+            labels={({ datum }) => `${datum.totalScore}`}
+            data={totalScores.map((el, index) => ({
+              ...el,
+              fill: color[index % color.length],
+            }))}
+            style={{
+              data: {
+                fill: ({ datum }) => datum.fill,
+              },
+            }}
+          />
+        </VictoryChart>
+      </div>
     </>
   );
 }

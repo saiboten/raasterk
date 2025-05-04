@@ -30,7 +30,16 @@ export const OverviewChart = ({
   return (
     <>
       <Heading size="lg">Månedens treningspoeng</Heading>
-      <VictoryChart domainPadding={5}>
+      <VictoryChart
+        domainPadding={5}
+        style={{
+          parent: {
+            pointerEvents: "auto",
+            touchAction: "auto",
+            userSelect: "auto",
+          },
+        }}
+      >
         <VictoryLegend
           x={80}
           y={10}
