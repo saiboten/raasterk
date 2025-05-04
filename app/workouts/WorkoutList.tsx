@@ -12,6 +12,7 @@ interface Props {
       User?: User | null;
     }
   >;
+  deleteWorkout: (workoutId: string) => Promise<void>;
   loadWorkouts: (index: number) => Promise<
     Array<
       Workout & {
@@ -22,7 +23,11 @@ interface Props {
   >;
 }
 
-export function WorkoutsList({ initialWorkouts, loadWorkouts }: Props) {
+export function WorkoutsList({
+  initialWorkouts,
+  loadWorkouts,
+  deleteWorkout,
+}: Props) {
   const [index, setIndex] = useState(0);
   const [workouts, setWorkouts] = useState(initialWorkouts);
 
@@ -60,7 +65,13 @@ export function WorkoutsList({ initialWorkouts, loadWorkouts }: Props) {
       </Flex>
       <Flex textAlign="left" flexDirection="column" gap="2">
         {workouts.map((workout) => {
-          return <WorkoutView key={workout.id} workout={workout}></WorkoutView>;
+          return (
+            <WorkoutView
+              deleteWorkout={() => deleteWorkout(workout.id)}
+              key={workout.id}
+              workout={workout}
+            ></WorkoutView>
+          );
         })}
       </Flex>
     </>

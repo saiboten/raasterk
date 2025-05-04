@@ -1,16 +1,34 @@
 "use client";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading, useToast } from "@chakra-ui/react";
 import { User, Workout, WorkoutType } from "@prisma/client";
 import { format } from "date-fns";
 import { Spacer } from "./lib/Spacer";
+import { useTransition } from "react";
 interface Props {
   workout: Workout & {
     WorkoutType: WorkoutType | null;
     User?: User | null;
   };
+  deleteWorkout?: () => Promise<void>;
 }
 
-export const WorkoutView = ({ workout }: Props) => {
+export const WorkoutView = ({ workout, deleteWorkout }: Props) => {
+  const [isPending, startTransition] = useTransition();
+  const toast = useToast();
+
+  async function handleDelete() {
+    startTransition(async () => {
+      if (typeof deleteWorkout === "function") {
+        await deleteWorkout();
+      }
+      toast({
+        duration: 5000,
+        title: "Trening slettet",
+        status: "success",
+      });
+    });
+  }
+
   return (
     <Box key={workout.id} border="1px solid black" padding="5">
       {workout.User ? (
@@ -34,6 +52,17 @@ export const WorkoutView = ({ workout }: Props) => {
       <Box>
         <strong>{workout.points}</strong> poeng
       </Box>
+      <Spacer />
+      {typeof deleteWorkout === "function" ? (
+        <Button
+          disabled={isPending}
+          backgroundColor="red"
+          color="white"
+          onClick={handleDelete}
+        >
+          Slette trening
+        </Button>
+      ) : null}
     </Box>
   );
 };
