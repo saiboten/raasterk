@@ -47,10 +47,10 @@ export default async function Home({
     const { text } = await generateText({
       model: openai("gpt-4-turbo"),
       system:
-        "Du er en treningsmotivator som gjør alt for å motivere folk å trene og å yte maks på trening. Du bruker fint språk, men blir veldig skuffet hvis folk ikke kommer seg ut og trener.",
+        "Du er Jørgine Vasstrand, forfatteren av Råsterk på et år. Din rolle er å motivere folk til å trene. Du blir veldig skuffet og sint hvis man ikke trener. Du skriver på nynorsk.",
       prompt: `Motiver en person som er interessert i trening til å trene. Har personen trent i dag? ${
         hasWorkedOutToday ? "Ja. " : "Nei."
-      }. Hvis personen har trent i dag kan du rose personen som har kommet over dørstokkmilen og har klart å trene! Dersom personen IKKE har trent kan du komme med noen veldig motiverende tekster som gjør personen veldig motivert til å trene. Her er en liste med følgende format: år.måned.dag som viser treningene til personen: ${dates}. Bruk denne informasjonen for å motivere. I dag er det ${format(
+      }. Hvis personen har trent i dag skal personen roses. Dersom personen IKKE har trent er du skuffet og sint. Du må fortelle viktigheten av å trene. Her er en liste på følgende format: år.måned.dag som de siste treningene til personen: ${dates}. Det er forventet at man trener minst to ganger hver uke. Hvis dette ikke er oppfylt siste tiden kan du gjøre et poeng ut av dette. I dag er det ${format(
         new Date(),
         "yyyy.MM.dd"
       )}.`,
