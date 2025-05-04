@@ -74,7 +74,13 @@ export async function loadHomeData() {
     },
   });
 
-  const lastFive = allWorkouts.reverse().slice(0, 3);
+  const workouts = await prisma.workout.findMany({
+    where: {
+      userId: await getUserId(),
+    },
+  });
+
+  const lastFive = allWorkouts.reverse().slice(0, 5);
 
   return {
     // user data
@@ -83,6 +89,7 @@ export async function loadHomeData() {
       .find((el) => isToday(el.date)),
     lastFive,
     scoreThisTimeLastMonth,
+    workouts,
   };
 }
 
