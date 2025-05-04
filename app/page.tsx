@@ -1,6 +1,7 @@
 import { Spacer } from "@/components/lib/Spacer";
 import {
   getChartData,
+  getUser,
   loadHomeData,
   loadScore,
   loadWorkoutTypes,
@@ -36,6 +37,8 @@ export default async function Home({
   const { hasWorkedOutToday, scoreThisTimeLastMonth, lastFive, workouts } =
     await loadHomeData();
 
+  const user = await getUser();
+
   const dates = workouts
     .map((el) => {
       return `Dato: ${format(el.date, "yyyy.MM.dd")}, trening: ${
@@ -45,6 +48,10 @@ export default async function Home({
     .join(", ");
 
   const initialScoreData = await totalScoreChart(0);
+
+  const scoresAsText = Object.values(initialScoreData.totalScores)
+    .map((score) => `${score.name}: ${score.totalScore}`)
+    .join(",");
 
   async function getMotivationalQuote() {
     "use server";
@@ -58,11 +65,9 @@ export default async function Home({
       }. Hvis personen har trent i dag skal personen roses. Dersom personen IKKE har trent er du skuffet og sint. Du må fortelle viktigheten av å trene. Her er en liste med treningsøkter på følgende format: "Dato: år.måned.dag, treningstype" for de siste treningene til personen: ${dates}. Det er forventet at man trener minst to ganger hver uke. Hvis dette ikke er oppfylt siste tiden kan du gjøre et poeng ut av dette. I dag er det ${format(
         new Date(),
         "yyyy.MM.dd"
-      )}. Personen deltar også i en treningskonkurranse med noen andre. Dette er resultatet i konkurransen, bruk dette til å inspirere: ${Object.values(
-        initialScoreData.totalScores
-      )
-        .map((score) => `${score.name}: ${score.totalScore}`)
-        .join(",")}`,
+      )}. Personen deltar også i en treningskonkurranse med noen andre. Dette er resultatet i konkurransen, bruk dette til å inspirere: ${scoresAsText}. Du er ${
+        user?.nickname ?? user?.name
+      }`,
     });
 
     return text;

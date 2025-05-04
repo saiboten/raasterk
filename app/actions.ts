@@ -215,3 +215,11 @@ export async function getChartData(input: number) {
 }
 
 export type ChartData = Awaited<ReturnType<typeof getChartData>>;
+
+export async function getUser() {
+  return await prisma.user.findUnique({
+    where: {
+      id: await getUserId(),
+    },
+  });
+}
