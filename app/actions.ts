@@ -78,6 +78,9 @@ export async function loadHomeData() {
     where: {
       userId: await getUserId(),
     },
+    include: {
+      WorkoutType: true,
+    },
   });
 
   const lastFive = allWorkouts.reverse().slice(0, 5);

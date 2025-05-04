@@ -38,22 +38,31 @@ export default async function Home({
 
   const dates = workouts
     .map((el) => {
-      return format(el.date, "yyyy.MM.dd");
+      return `Dato: ${format(el.date, "yyyy.MM.dd")}, trening: ${
+        el.WorkoutType?.name ?? "ukjent"
+      }`;
     })
     .join(", ");
 
+  const initialScoreData = await totalScoreChart(0);
+
   async function getMotivationalQuote() {
     "use server";
+
     const { text } = await generateText({
       model: openai("gpt-4-turbo"),
       system:
         "Du er Jørgine Vasstrand, forfatteren av Råsterk på et år. Din rolle er å motivere folk til å trene. Du blir veldig skuffet og sint hvis man ikke trener. Du skriver på nynorsk. Du begrenser dine svar til 100 ord.",
       prompt: `Motiver en person som er interessert i trening til å trene. Har personen trent i dag? ${
         hasWorkedOutToday ? "Ja. " : "Nei."
-      }. Hvis personen har trent i dag skal personen roses. Dersom personen IKKE har trent er du skuffet og sint. Du må fortelle viktigheten av å trene. Her er en liste på følgende format: år.måned.dag som de siste treningene til personen: ${dates}. Det er forventet at man trener minst to ganger hver uke. Hvis dette ikke er oppfylt siste tiden kan du gjøre et poeng ut av dette. I dag er det ${format(
+      }. Hvis personen har trent i dag skal personen roses. Dersom personen IKKE har trent er du skuffet og sint. Du må fortelle viktigheten av å trene. Her er en liste med treningsøkter på følgende format: "Dato: år.måned.dag, treningstype" for de siste treningene til personen: ${dates}. Det er forventet at man trener minst to ganger hver uke. Hvis dette ikke er oppfylt siste tiden kan du gjøre et poeng ut av dette. I dag er det ${format(
         new Date(),
         "yyyy.MM.dd"
-      )}.`,
+      )}. Personen deltar også i en treningskonkurranse med noen andre. Dette er resultatet i konkurransen, bruk dette til å inspirere: ${Object.values(
+        initialScoreData.totalScores
+      )
+        .map((score) => `${score.name}: ${score.totalScore}`)
+        .join(",")}`,
     });
 
     return text;
@@ -61,7 +70,7 @@ export default async function Home({
 
   const workoutTypes = await loadWorkoutTypes();
   const initialChartData = await getChartData(0);
-  const initialScoreData = await totalScoreChart(0);
+
   const score = await loadScore();
 
   return (
