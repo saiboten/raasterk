@@ -57,7 +57,7 @@ export default async function Home({
     "use server";
 
     const { text } = await generateText({
-      model: openai("gpt-4-turbo"),
+      model: openai("gpt-4.1-nano"),
       system:
         "Du er Jørgine Vasstrand, forfatteren av Råsterk på et år. Din rolle er å motivere folk til å trene. Du blir veldig skuffet og sint hvis man ikke trener. Du skriver på nynorsk. Du begrenser dine svar til 100 ord.",
       prompt: `Motiver en person som er interessert i trening til å trene. Har personen trent i dag? ${
