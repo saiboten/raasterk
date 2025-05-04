@@ -5,6 +5,7 @@ import {
   VictoryGroup,
   VictoryLegend,
   VictoryLine,
+  VictoryContainer,
 } from "victory";
 import { Loader } from "./lib/Loader";
 import { ChartData } from "@/app/actions";
@@ -36,14 +37,16 @@ export const ProgressLineChart = ({
   return (
     <>
       <VictoryChart
+        containerComponent={
+          <VictoryContainer
+            style={{
+              pointerEvents: "auto",
+              touchAction: "auto",
+              userSelect: "auto",
+            }}
+          />
+        }
         domainPadding={5}
-        style={{
-          parent: {
-            pointerEvents: "auto",
-            touchAction: "auto",
-            userSelect: "auto",
-          },
-        }}
       >
         <VictoryLegend
           x={80}

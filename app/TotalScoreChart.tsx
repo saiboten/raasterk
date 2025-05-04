@@ -1,7 +1,12 @@
 "use client";
 import { Spacer } from "@/components/lib/Spacer";
 import { Box, Heading } from "@chakra-ui/react";
-import { VictoryAxis, VictoryBar, VictoryChart } from "victory";
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryContainer,
+} from "victory";
 import { ScoreData } from "./FrontPageContent";
 
 export const color = ["chocolate", "darkcyan", "lightcoral"] as const;
@@ -31,14 +36,16 @@ export function TotalScoreChart({ scoreData }: Props) {
       <Spacer />
       <div style={{ touchAction: "auto", WebkitOverflowScrolling: "touch" }}>
         <VictoryChart
+          containerComponent={
+            <VictoryContainer
+              style={{
+                pointerEvents: "auto",
+                touchAction: "auto",
+                userSelect: "auto",
+              }}
+            />
+          }
           domainPadding={{ x: 50 }}
-          style={{
-            parent: {
-              pointerEvents: "auto",
-              touchAction: "auto",
-              userSelect: "auto",
-            },
-          }}
         >
           <VictoryAxis />
           <VictoryBar

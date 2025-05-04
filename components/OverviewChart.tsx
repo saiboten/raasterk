@@ -6,6 +6,7 @@ import {
   VictoryTooltip,
   VictoryGroup,
   VictoryLegend,
+  VictoryContainer,
 } from "victory";
 import { ChartData } from "@/app/actions";
 import { color } from "@/app/TotalScoreChart";
@@ -31,14 +32,16 @@ export const OverviewChart = ({
     <>
       <Heading size="lg">Månedens treningspoeng</Heading>
       <VictoryChart
+        containerComponent={
+          <VictoryContainer
+            style={{
+              pointerEvents: "auto",
+              touchAction: "auto",
+              userSelect: "auto",
+            }}
+          />
+        }
         domainPadding={5}
-        style={{
-          parent: {
-            pointerEvents: "auto",
-            touchAction: "auto",
-            userSelect: "auto",
-          },
-        }}
       >
         <VictoryLegend
           x={80}
