@@ -57,7 +57,7 @@ export default async function Home({
     "use server";
 
     const { text } = await generateText({
-      model: openai("gpt-4-turbo"),
+      model: openai("o4-mini"),
       system: "Du er en treningsmotivator. Begrens svar til 100 ord.",
       prompt: `Jeg ønsker å trene to ganger i uken. ${
         hasWorkedOutToday
