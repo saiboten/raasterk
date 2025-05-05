@@ -105,7 +105,7 @@ export default async function Home({
       ) : null}
 
       <AIMotivator getMotivationalQuote={getMotivationalQuote} />
-
+      <Spacer />
       <Text marginBottom="1rem">
         Siste måned på denne dagen hadde du{" "}
         <strong>{scoreThisTimeLastMonth} poeng</strong>
