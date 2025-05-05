@@ -43,7 +43,7 @@ export default async function Home({
     .map((el) => {
       return `Dato: ${format(el.date, "yyyy.MM.dd")}, trening: ${
         el.WorkoutType?.name ?? "ukjent"
-      }`;
+      }, ${el.points}`;
     })
     .join(", ");
 
@@ -53,6 +53,11 @@ export default async function Home({
     .map((score) => `${score.name}: ${score.totalScore}`)
     .join(",");
 
+  const workoutTypes = await loadWorkoutTypes();
+
+  const workoutTypesString = workoutTypes
+    .map((el) => JSON.stringify(el))
+    .join(", ");
   async function getMotivationalQuote() {
     "use server";
 
@@ -63,18 +68,17 @@ export default async function Home({
         hasWorkedOutToday
           ? "Jeg har trent i dag og fortjener ros."
           : "Jeg har ikke trent i dag, noe som gjør deg opprørt."
-      }. Liste med treningsøkter, format: "Dato: år.måned.dag, treningstype": ${dates}. I dag er det ${format(
+      }. Liste med treningsøkter, format: "Dato: år.måned.dag, treningstype, poeng": ${dates}. I dag er det ${format(
         new Date(),
         "yyyy.MM.dd"
-      )}. Jeg deltar i en treningskonkurranse. Dette er stillingen i konkurransen, bruk dette til å inspirere meg: ${scoresAsText}. Jeg heter ${
+      )}. Jeg deltar i en treningskonkurranse. Her er info om hvordan man kan få poeng: ${workoutTypesString}. Dette er stillingen i konkurransen, bruk dette til å inspirere meg: ${scoresAsText}. Dette er hvordan man får poeng:  Jeg heter ${
         user?.nickname ?? user?.name
-      }`,
+      }. Bruk denne infoen til å foreslå hvordan man kan komme først i konkurransen.`,
     });
 
     return text;
   }
 
-  const workoutTypes = await loadWorkoutTypes();
   const initialChartData = await getChartData(0);
 
   const score = await loadScore();
