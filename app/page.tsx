@@ -71,7 +71,7 @@ export default async function Home({
       }. Liste med treningsøkter, format: "Dato: år.måned.dag, treningstype, poeng": ${dates}. I dag er det ${format(
         new Date(),
         "yyyy.MM.dd"
-      )}. Jeg deltar i en treningskonkurranse. Her er info om hvordan man kan få poeng: ${workoutTypesString}. Dette er stillingen i konkurransen, bruk dette til å inspirere meg: ${scoresAsText}. Dette er hvordan man får poeng:  Jeg heter ${
+      )}. Jeg deltar i en treningskonkurranse. Her er info om hvordan man kan få poeng: iterationCount er antall repitisjoner. IterationLength er antall minutter med denne aktiviteten. ${workoutTypesString}. Dette er stillingen i konkurransen, bruk dette til å inspirere meg: ${scoresAsText}. Dette er hvordan man får poeng:  Jeg heter ${
         user?.nickname ?? user?.name
       }. Bruk denne infoen til å foreslå hvordan man kan komme først i konkurransen.`,
     });
