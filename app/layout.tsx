@@ -58,7 +58,7 @@ export default async function RootLayout({
                       p="5"
                       borderRadius="5"
                     >
-                      Treningsutfordring
+                      Råsterk
                     </Heading>
                   </Link>
                   <Flex justifyContent="flex-end">
